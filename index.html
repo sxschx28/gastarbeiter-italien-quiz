@@ -43,7 +43,6 @@ body{
 }
 button{font:inherit;color:inherit;cursor:pointer;border:none;background:none;letter-spacing:inherit}
 button:focus-visible,[tabindex]:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
-
 /* ---------- Hintergrund ---------- */
 .bg{position:fixed;inset:0;z-index:-1;overflow:hidden;
   background:linear-gradient(135deg,var(--bg1),var(--bg2))}
@@ -59,7 +58,6 @@ button:focus-visible,[tabindex]:focus-visible{outline:3px solid var(--accent);ou
 html[data-theme="dark"] .bg-img::after{background:rgba(0,0,0,.35)}
 body.has-bg .bg-img{opacity:1}
 body.has-bg .blob{display:none}
-
 /* ---------- Topbar ---------- */
 .topbar{position:fixed;top:0;left:0;right:0;z-index:20;display:flex;align-items:center;justify-content:space-between;
   padding:calc(14px + env(safe-area-inset-top)) clamp(14px,3vw,32px) 10px;pointer-events:none}
@@ -86,7 +84,6 @@ body.has-bg .blob{display:none}
 .pill-btn.on{background:var(--accent);color:#fff;border-color:transparent}
 #gearBtn svg{transition:transform .5s var(--ease)}
 #gearBtn:hover svg{transform:rotate(60deg)}
-
 /* ---------- Layout ---------- */
 main{min-height:100vh;min-height:100dvh;display:flex;align-items:center;justify-content:center;
   padding:calc(84px + env(safe-area-inset-top)) clamp(14px,3vw,40px) calc(36px + env(safe-area-inset-bottom))}
@@ -95,7 +92,6 @@ main{min-height:100vh;min-height:100dvh;display:flex;align-items:center;justify-
 @keyframes screenIn{from{opacity:0;transform:translateY(18px) scale(.985)}to{opacity:1;transform:none}}
 .card{background:var(--glass);border:1px solid var(--glass-border);border-radius:32px;box-shadow:var(--shadow);
   backdrop-filter:blur(28px) saturate(180%);-webkit-backdrop-filter:blur(28px) saturate(180%)}
-
 /* ---------- Start ---------- */
 .hero{padding:clamp(28px,6vw,72px);text-align:center}
 .eyebrow{display:inline-block;font-size:.8rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
@@ -123,7 +119,6 @@ main{min-height:100vh;min-height:100dvh;display:flex;align-items:center;justify-
   transition:transform .2s var(--ease),background .2s,box-shadow .2s}
 .btn-ghost:hover{transform:translateY(-2px);background:var(--glass-strong);box-shadow:0 8px 22px rgba(0,0,0,.10)}
 .btn-ghost:active{transform:scale(.97)}
-
 /* ---------- Quiz ---------- */
 .quiz{padding:clamp(20px,3.6vw,44px)}
 .q-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
@@ -171,7 +166,6 @@ html[data-theme="dark"] .ans.chosen{outline-color:rgba(255,255,255,.35)}
 .ans.reveal.wrong{animation:soft .5s var(--ease) both}
 @keyframes pop{0%{transform:scale(1)}35%{transform:scale(1.035);box-shadow:0 0 0 10px rgba(52,199,89,.25)}100%{transform:scale(1)}}
 @keyframes soft{0%{opacity:.4}100%{opacity:.88}}
-
 .feedback{display:none;margin-top:24px;padding:clamp(16px,2.4vw,26px);border-radius:24px;border:2px solid var(--line);
   background:var(--glass-strong)}
 .feedback.show{display:block}
@@ -192,12 +186,10 @@ html[data-theme="dark"] .ans.chosen{outline-color:rgba(255,255,255,.35)}
 .fb-sub{font-size:clamp(1rem,1.8vw,1.2rem);color:var(--muted);margin-top:2px;font-weight:550}
 .fb-expl{margin-top:14px;padding-top:14px;border-top:1px solid var(--line);font-size:clamp(1rem,1.8vw,1.2rem);line-height:1.55}
 .fb-expl b{font-weight:750}
-
 .nav{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:28px;flex-wrap:wrap}
 .nav .hint{flex:1;text-align:center;font-size:.9rem;color:var(--muted);min-width:140px}
 .nav .btn-primary{margin-top:0;padding:16px 34px;font-size:1.1rem}
 .nav .btn-ghost{padding:16px 28px}
-
 /* ---------- Ergebnis ---------- */
 .result{padding:clamp(26px,5vw,60px);text-align:center}
 .ring{position:relative;width:min(280px,64vw);aspect-ratio:1;margin:8px auto 0}
@@ -219,7 +211,6 @@ html[data-theme="dark"] .ans.chosen{outline-color:rgba(255,255,255,.35)}
 .review .dot{width:42px;height:42px;font-size:.95rem}
 .review-label{margin-top:26px;font-size:.9rem;color:var(--muted)}
 .result .btn-primary{margin-top:30px}
-
 /* ---------- Einstellungen ---------- */
 .overlay{position:fixed;inset:0;z-index:50;display:none;background:rgba(10,15,30,.25);
   backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px)}
@@ -256,7 +247,6 @@ html[data-theme="dark"] .ans.chosen{outline-color:rgba(255,255,255,.35)}
 .note{font-size:.8rem;color:var(--bad);margin-top:8px;display:none}
 .note.show{display:block}
 .kbd{margin-top:8px;font-size:.78rem;color:var(--muted);line-height:1.5}
-
 /* ---------- Präsentationsmodus ---------- */
 body.pres main{padding-top:calc(70px + env(safe-area-inset-top))}
 body.pres .screen{max-width:min(1560px,96vw)}
@@ -280,7 +270,6 @@ body.pres .fact small{font-size:clamp(1rem,1.5vw,1.5rem)}
 body.pres .btn-primary{font-size:clamp(1.5rem,2.4vw,2.4rem);padding:26px 64px}
 body.pres .verdict{font-size:clamp(2.2rem,5vw,5rem)}
 body.pres .stat small,body.pres .verdict-sub{font-size:clamp(1.1rem,1.6vw,1.6rem)}
-
 /* ---------- Responsive ---------- */
 @media (max-width:640px){
   .facts,.stats{gap:8px}
@@ -294,19 +283,118 @@ body.pres .stat small,body.pres .verdict-sub{font-size:clamp(1.1rem,1.6vw,1.6rem
   .ans .tag{display:none}
   .panel{left:14px;right:14px;width:auto}
 }
-
 /* ---------- Animationen aus ---------- */
 body.no-anim *,body.no-anim *::before,body.no-anim *::after{animation:none!important;transition:none!important}
 body.no-anim .ring .val{transition:none!important}
 @media (prefers-reduced-motion:reduce){.blob{animation:none}}
 @media print{.topbar{display:none}}
+
+/* ---------- Passwort-Sperre ---------- */
+#lockScreen{
+  position:fixed;inset:0;z-index:100;
+  display:flex;align-items:center;justify-content:center;
+  padding:clamp(20px,4vw,40px);
+  background:linear-gradient(135deg,var(--bg1),var(--bg2));
+}
+#lockScreen.hidden{display:none}
+.lock-card{
+  width:100%;max-width:440px;
+  padding:clamp(32px,6vw,48px);
+  text-align:center;
+  background:var(--glass);
+  border:1px solid var(--glass-border);
+  border-radius:32px;
+  box-shadow:var(--shadow);
+  backdrop-filter:blur(28px) saturate(180%);
+  -webkit-backdrop-filter:blur(28px) saturate(180%);
+  animation:screenIn .6s var(--ease) both;
+}
+.lock-icon{
+  width:64px;height:64px;margin:0 auto 22px;
+  border-radius:50%;
+  background:var(--accent-soft);
+  display:grid;place-items:center;
+}
+.lock-icon svg{
+  width:30px;height:30px;
+  stroke:var(--accent);fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;
+}
+.lock-card h1{
+  font-size:clamp(1.5rem,3.5vw,1.9rem);
+  font-weight:800;letter-spacing:-.03em;
+  margin-bottom:8px;
+}
+.lock-card p{
+  font-size:1.05rem;color:var(--muted);line-height:1.45;
+  margin-bottom:28px;
+}
+.lock-input-wrap{
+  position:relative;margin-bottom:18px;
+}
+.lock-input-wrap input{
+  width:100%;
+  padding:18px 20px;
+  font-size:1.15rem;font-weight:600;
+  text-align:center;letter-spacing:.04em;
+  border-radius:18px;
+  border:2px solid var(--line);
+  background:var(--ans);
+  color:var(--text);
+  outline:none;
+  transition:border-color .25s, box-shadow .25s;
+}
+.lock-input-wrap input:focus{
+  border-color:var(--accent);
+  box-shadow:0 0 0 4px var(--accent-soft);
+}
+.lock-input-wrap input.error{
+  border-color:var(--bad-line);
+  animation:shake .4s var(--ease);
+}
+@keyframes shake{
+  0%,100%{transform:translateX(0)}
+  20%{transform:translateX(-8px)}
+  40%{transform:translateX(8px)}
+  60%{transform:translateX(-6px)}
+  80%{transform:translateX(6px)}
+}
+.lock-error{
+  display:none;
+  margin-top:12px;
+  font-size:.95rem;font-weight:600;
+  color:var(--bad);
+}
+.lock-error.show{display:block}
+.lock-card .btn-primary{
+  width:100%;
+  margin-top:8px;
+  padding:18px 28px;
+  font-size:1.15rem;
+}
+body.locked .topbar,
+body.locked main{visibility:hidden;pointer-events:none}
 </style>
 </head>
-<body>
-
+<body class="locked">
 <div class="bg" aria-hidden="true">
   <div class="bg-img" id="bgImg"></div>
   <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
+</div>
+
+<!-- PASSWORT-SPERRE -->
+<div id="lockScreen">
+  <div class="lock-card card">
+    <div class="lock-icon">
+      <svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+    </div>
+    <h1>Passwort erforderlich</h1>
+    <p>Gib bitte das Passwort ein, um das Quiz zu öffnen.</p>
+    <div class="lock-input-wrap">
+      <input type="password" id="pwInput" placeholder="Passwort eingeben" autocomplete="off" autofocus>
+    </div>
+    <div class="lock-error" id="pwError">Falsches Passwort. Bitte erneut versuchen.</div>
+    <button class="btn-primary" id="pwBtn">Quiz öffnen</button>
+  </div>
 </div>
 
 <header class="topbar">
@@ -324,7 +412,6 @@ body.no-anim .ring .val{transition:none!important}
     </button>
   </div>
 </header>
-
 <main>
   <!-- STARTSEITE -->
   <section class="screen active card hero" id="screenStart">
@@ -340,7 +427,6 @@ body.no-anim .ring .val{transition:none!important}
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
     </button>
   </section>
-
   <!-- QUIZ -->
   <section class="screen card quiz" id="screenQuiz" aria-live="polite">
     <div class="q-head">
@@ -366,7 +452,6 @@ body.no-anim .ring .val{transition:none!important}
       <button class="btn-primary" id="nextBtn">Weiter →</button>
     </div>
   </section>
-
   <!-- ERGEBNIS -->
   <section class="screen card result" id="screenResult">
     <div class="eyebrow">Ergebnis</div>
@@ -393,12 +478,10 @@ body.no-anim .ring .val{transition:none!important}
     </button>
   </section>
 </main>
-
 <!-- EINSTELLUNGEN -->
 <div class="overlay" id="overlay">
   <div class="panel" role="dialog" aria-modal="true" aria-labelledby="setTitle">
     <h2 id="setTitle">Einstellungen <button id="closeSet" aria-label="Schließen">✕</button></h2>
-
     <div class="row col">
       <div class="lbl">Hintergrundbild<small>Eigenes Bild von diesem Computer wählen</small></div>
       <div class="btns">
@@ -408,7 +491,6 @@ body.no-anim .ring .val{transition:none!important}
       <input type="file" id="bgFile" accept="image/*" hidden>
       <div class="note" id="bgNote">Das Bild wird nur für diese Sitzung verwendet (zu groß zum Speichern).</div>
     </div>
-
     <div class="row">
       <div class="lbl">Designmodus</div>
       <div class="seg" role="group" aria-label="Designmodus">
@@ -416,12 +498,10 @@ body.no-anim .ring .val{transition:none!important}
         <button id="themeDark" aria-pressed="false">Dunkel</button>
       </div>
     </div>
-
     <div class="row">
       <div class="lbl">Animationen</div>
       <button class="switch" id="swAnim" role="switch" aria-checked="true" aria-label="Animationen"></button>
     </div>
-
     <div class="row">
       <div class="lbl">Schriftgröße</div>
       <div class="fsz">
@@ -430,24 +510,64 @@ body.no-anim .ring .val{transition:none!important}
         <button class="mini plain" id="fsPlus" aria-label="Schrift größer">A+</button>
       </div>
     </div>
-
     <div class="row">
       <div class="lbl">Soundeffekte<small>Dezente Töne bei richtig / falsch</small></div>
       <button class="switch" id="swSound" role="switch" aria-checked="false" aria-label="Soundeffekte"></button>
     </div>
-
     <div class="row">
       <div class="lbl">Präsentationsmodus<small>Große Schrift für den Beamer</small></div>
       <button class="switch" id="swPres" role="switch" aria-checked="false" aria-label="Präsentationsmodus"></button>
     </div>
-
     <div class="kbd">Tastatur: <b>A–D</b> oder <b>1–4</b> wählt eine Antwort · <b>←</b> / <b>→</b> navigiert · <b>Esc</b> schließt.</div>
   </div>
 </div>
-
 <script>
 (function(){
 "use strict";
+/* ===================== PASSWORT ===================== */
+var PASSWORD = "ges-sxschx-28";
+var unlocked = false;
+try { unlocked = sessionStorage.getItem("gastarbeiterQuiz.unlocked") === "1"; } catch(e){}
+
+function unlock(){
+  unlocked = true;
+  try { sessionStorage.setItem("gastarbeiterQuiz.unlocked", "1"); } catch(e){}
+  document.body.classList.remove("locked");
+  var lock = document.getElementById("lockScreen");
+  if(lock) lock.classList.add("hidden");
+  // Fokus auf Start-Button setzen
+  setTimeout(function(){ var b = document.getElementById("startBtn"); if(b) b.focus(); }, 100);
+}
+
+function checkPassword(){
+  var input = document.getElementById("pwInput");
+  var err = document.getElementById("pwError");
+  if(!input) return;
+  var val = (input.value || "").trim();
+  if(val === PASSWORD){
+    err.classList.remove("show");
+    unlock();
+  } else {
+    input.classList.add("error");
+    err.classList.add("show");
+    input.select();
+    setTimeout(function(){ input.classList.remove("error"); }, 500);
+  }
+}
+
+if(unlocked){
+  document.body.classList.remove("locked");
+  var lockEl = document.getElementById("lockScreen");
+  if(lockEl) lockEl.classList.add("hidden");
+} else {
+  // Event-Listener für Passwort
+  document.getElementById("pwBtn").onclick = checkPassword;
+  document.getElementById("pwInput").addEventListener("keydown", function(e){
+    if(e.key === "Enter"){ e.preventDefault(); checkPassword(); }
+  });
+  // Fokus setzen
+  setTimeout(function(){ document.getElementById("pwInput").focus(); }, 80);
+}
 
 /* ===================== FRAGEN ===================== */
 var QUESTIONS = [
@@ -514,12 +634,10 @@ var QUESTIONS = [
 ];
 var N = QUESTIONS.length;
 var LETTERS = ["A","B","C","D"];
-
 var OK_TITLES   = ["Richtig!"];
 var OK_SUBS     = ["Sehr gut aufgepasst!","Genau! Das habt ihr richtig erkannt!","Stark! Das habt ihr gewusst!","Perfekt getroffen – weiter so!","Tolle Teamarbeit – das war richtig!"];
 var BAD_TITLES  = ["Leider falsch!"];
 var BAD_SUBS    = ["Leider nicht ganz! Die richtige Antwort ist {L}.","Knapp daneben! Jetzt wisst ihr es für die nächste Frage.","Nicht ganz – aber jetzt wisst ihr es! Richtig ist {L}.","Schade! Die richtige Antwort ist {L}. Beim nächsten Mal klappt es!"];
-
 var RESULTS = [
   {max:3,  t:"Da ist noch Luft nach oben!", s:"Mit diesem neuen Wissen klappt es beim nächsten Mal bestimmt besser."},
   {max:5,  t:"Ein guter Anfang!",           s:"Ihr habt schon einiges mitgenommen – da geht noch mehr."},
@@ -527,14 +645,12 @@ var RESULTS = [
   {max:9,  t:"Sehr gut!",                   s:"Das war richtig stark – fast alles gewusst!"},
   {max:10, t:"Perfekt! Du bist ein echter Experte!", s:"Alle Fragen richtig – herzlichen Glückwunsch!"}
 ];
-
 /* ===================== STATE & EINSTELLUNGEN ===================== */
 var KEY = "gastarbeiterQuiz.settings.v1", BGKEY = "gastarbeiterQuiz.bg.v1";
 var SCALES = [0.85,0.92,1,1.1,1.2,1.3,1.45];
 var settings = {theme:"light", anim:true, sound:false, scaleIdx:2, pres:false};
 var bgData = null;
 var cur = 0, answers = [], started = false;
-
 function $(id){return document.getElementById(id);}
 function load(){
   try{ var s = JSON.parse(localStorage.getItem(KEY)||"null"); if(s){ for(var k in settings){ if(k in s) settings[k]=s[k]; } } }catch(e){}
@@ -542,7 +658,6 @@ function load(){
   if(typeof settings.scaleIdx!=="number"||settings.scaleIdx<0||settings.scaleIdx>=SCALES.length) settings.scaleIdx=2;
 }
 function save(){ try{ localStorage.setItem(KEY, JSON.stringify(settings)); }catch(e){} }
-
 function applySettings(){
   var root = document.documentElement;
   root.setAttribute("data-theme", settings.theme);
@@ -564,7 +679,6 @@ function applySettings(){
   $("fsMinus").style.opacity = $("fsMinus").disabled?.4:1;
   $("fsPlus").style.opacity = $("fsPlus").disabled?.4:1;
 }
-
 /* ===================== SOUND ===================== */
 var actx = null;
 function tone(freq, start, dur, vol, type){
@@ -584,7 +698,6 @@ function playSound(ok){
     else  { tone(246.94,0,.25,.10,"triangle"); tone(196,.17,.4,.10,"triangle"); }
   }catch(e){}
 }
-
 /* ===================== ANZEIGE ===================== */
 var screens = {start:$("screenStart"), quiz:$("screenQuiz"), result:$("screenResult")};
 function show(name){
@@ -596,7 +709,6 @@ function show(name){
 function firstUnanswered(){ for(var i=0;i<N;i++){ if(answers[i]===null) return i; } return N; }
 function answeredCount(){ var n=0; for(var i=0;i<N;i++){ if(answers[i]!==null) n++; } return n; }
 function correctCount(){ var n=0; for(var i=0;i<N;i++){ if(answers[i]===QUESTIONS[i].c) n++; } return n; }
-
 function renderDots(){
   var box = $("dots"), fu = firstUnanswered();
   box.innerHTML = "";
@@ -613,7 +725,6 @@ function renderDots(){
     })(i);
   }
 }
-
 function renderQuestion(dir, fresh){
   var q = QUESTIONS[cur];
   $("qCount").textContent = "Frage "+(cur+1)+" von "+N;
@@ -621,11 +732,9 @@ function renderQuestion(dir, fresh){
   $("progress").setAttribute("aria-valuenow", cur+1);
   $("qScore").textContent = answeredCount()+" von "+N+" beantwortet";
   $("qText").textContent = q.q;
-
   var body = $("qBody");
   body.classList.remove("slide-next","slide-prev");
   if(dir){ void body.offsetWidth; body.classList.add(dir>0?"slide-next":"slide-prev"); }
-
   var box = $("answers"); box.innerHTML = "";
   q.a.forEach(function(text, i){
     var b = document.createElement("button");
@@ -635,12 +744,10 @@ function renderQuestion(dir, fresh){
     b.onclick = function(){ choose(i); };
     box.appendChild(b);
   });
-
   var fb = $("feedback"); fb.className = "feedback";
   if(answers[cur]!==null) reveal(false);
   renderDots(); renderNav();
 }
-
 function reveal(animate){
   var q = QUESTIONS[cur], pick = answers[cur], ok = pick===q.c;
   var btns = $("answers").children;
@@ -669,7 +776,6 @@ function reveal(animate){
     setTimeout(function(){ try{ fb.scrollIntoView({behavior: settings.anim?"smooth":"auto", block:"nearest"}); }catch(e){} }, 120);
   }
 }
-
 function choose(i){
   if(answers[cur]!==null) return;      // Antwort ist gesperrt
   answers[cur] = i;
@@ -678,7 +784,6 @@ function choose(i){
   $("qScore").textContent = answeredCount()+" von "+N+" beantwortet";
   renderDots(); renderNav();
 }
-
 function renderNav(){
   var prev=$("prevBtn"), next=$("nextBtn"), hint=$("navHint");
   var answered = answers[cur]!==null, last = cur===N-1;
@@ -695,7 +800,6 @@ function renderNav(){
     hint.textContent = answered ? "" : "Wählt eine Antwort aus.";
   }
 }
-
 function goTo(i){
   if(i<0||i>=N||i===cur) return;
   if(i>firstUnanswered()) return;
@@ -707,13 +811,11 @@ function next(){
   if(cur===N-1){ finish(); } else { goTo(cur+1); }
 }
 function prev(){ if(cur>0) goTo(cur-1); }
-
 function startQuiz(){
   answers = []; for(var i=0;i<N;i++) answers.push(null);
   cur = 0; started = true;
   show("quiz"); renderQuestion(0);
 }
-
 function finish(){
   if(answeredCount()<N) return;
   var ok = correctCount(), bad = N-ok, pct = Math.round(ok/N*100);
@@ -738,11 +840,9 @@ function finish(){
   show("result");
   setTimeout(function(){ ring.style.strokeDasharray = (circ*ok/N)+" 1000"; }, 80);
 }
-
 /* ===================== EINSTELLUNGEN-UI ===================== */
 function openSettings(){ $("overlay").classList.add("open"); $("closeSet").focus(); }
 function closeSettings(){ $("overlay").classList.remove("open"); $("gearBtn").focus(); }
-
 function fullscreenToggle(){
   var d=document, el=d.documentElement;
   try{
@@ -754,7 +854,6 @@ function fullscreenToggle(){
     }
   }catch(e){}
 }
-
 function setBackground(file){
   if(!file||!/^image\//.test(file.type)) return;
   var url = URL.createObjectURL(file), img = new Image();
@@ -773,7 +872,6 @@ function setBackground(file){
   img.onerror = function(){ URL.revokeObjectURL(url); };
   img.src = url;
 }
-
 function bind(){
   $("startBtn").onclick = startQuiz;
   $("prevBtn").onclick = prev;
@@ -797,7 +895,6 @@ function bind(){
     bgData=null; try{ localStorage.removeItem(BGKEY); }catch(e){}
     $("bgNote").classList.remove("show"); applySettings();
   };
-
   document.addEventListener("keydown", function(e){
     if(e.ctrlKey||e.metaKey||e.altKey) return;
     if(e.key==="Escape"){ if($("overlay").classList.contains("open")) closeSettings(); return; }
@@ -811,7 +908,6 @@ function bind(){
     else if(e.key==="ArrowLeft"){ prev(); }
   });
 }
-
 load(); applySettings(); bind();
 })();
 </script>
