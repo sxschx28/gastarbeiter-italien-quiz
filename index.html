@@ -1,404 +1,819 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Quellenverzeichnis · Italienische Gastarbeiter</title>
-  <style>
-    :root {
-      --glass-bg: rgba(255, 255, 255, 0.12);
-      --glass-border: rgba(255, 255, 255, 0.22);
-      --glass-highlight: rgba(255, 255, 255, 0.35);
-      --text-primary: #f5f5f7;
-      --text-secondary: rgba(255, 255, 255, 0.72);
-      --accent: #0a84ff;
-      --accent-soft: rgba(10, 132, 255, 0.25);
-      --card-radius: 22px;
-      --shadow: 0 8px 32px rgba(0, 0, 0, 0.28);
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Quiz: Die italienischen Gastarbeiter in der BRD</title>
+<style>
+:root{
+  --scale:1;
+  --bg1:#eef2fb; --bg2:#f7f1ec;
+  --blob1:#a9c4ff; --blob2:#ffd3b0; --blob3:#c9f0e0;
+  --text:#1d1d1f; --muted:#5f6470;
+  --glass:rgba(255,255,255,.62); --glass-strong:rgba(255,255,255,.82);
+  --glass-border:rgba(255,255,255,.75);
+  --line:rgba(0,0,0,.08);
+  --shadow:0 10px 40px rgba(31,41,80,.10), 0 2px 8px rgba(31,41,80,.05);
+  --accent:#0071e3; --accent2:#5e5ce6; --accent-soft:rgba(0,113,227,.12);
+  --ok:#1f9d46; --ok-bg:rgba(52,199,89,.20); --ok-line:#34c759;
+  --bad:#d92d20; --bad-bg:rgba(255,69,58,.15); --bad-line:#ff453a;
+  --ans:rgba(255,255,255,.72);
+  --ease:cubic-bezier(.22,.8,.24,1);
+}
+html[data-theme="dark"]{
+  --bg1:#0d1020; --bg2:#1a1426;
+  --blob1:#2c4a9a; --blob2:#6b3a6e; --blob3:#1c5a5a;
+  --text:#f5f5f7; --muted:#a6abb8;
+  --glass:rgba(34,36,52,.58); --glass-strong:rgba(44,46,66,.85);
+  --glass-border:rgba(255,255,255,.12);
+  --line:rgba(255,255,255,.10);
+  --shadow:0 14px 50px rgba(0,0,0,.45), 0 2px 8px rgba(0,0,0,.3);
+  --accent:#4da3ff; --accent2:#8e8cff; --accent-soft:rgba(77,163,255,.18);
+  --ok:#4ade80; --ok-bg:rgba(52,199,89,.22); --ok-line:#34c759;
+  --bad:#ff8a80; --bad-bg:rgba(255,69,58,.20); --bad-line:#ff453a;
+  --ans:rgba(255,255,255,.07);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{font-size:calc(16px * var(--scale));-webkit-text-size-adjust:100%}
+body{
+  min-height:100vh;min-height:100dvh;
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Segoe UI Variable","Segoe UI",Inter,Roboto,"Helvetica Neue",Arial,sans-serif;
+  color:var(--text);background:var(--bg1);
+  -webkit-font-smoothing:antialiased;letter-spacing:-.01em;overflow-x:hidden;
+}
+button{font:inherit;color:inherit;cursor:pointer;border:none;background:none;letter-spacing:inherit}
+button:focus-visible,[tabindex]:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+/* ---------- Hintergrund ---------- */
+.bg{position:fixed;inset:0;z-index:-1;overflow:hidden;
+  background:linear-gradient(135deg,var(--bg1),var(--bg2))}
+.blob{position:absolute;border-radius:50%;filter:blur(80px);opacity:.75;will-change:transform}
+.blob.b1{width:48vmax;height:48vmax;background:var(--blob1);top:-14vmax;left:-12vmax;animation:float1 26s ease-in-out infinite alternate}
+.blob.b2{width:42vmax;height:42vmax;background:var(--blob2);bottom:-16vmax;right:-10vmax;animation:float2 30s ease-in-out infinite alternate}
+.blob.b3{width:32vmax;height:32vmax;background:var(--blob3);top:35%;left:45%;opacity:.55;animation:float3 34s ease-in-out infinite alternate}
+@keyframes float1{to{transform:translate(8vmax,6vmax) scale(1.1)}}
+@keyframes float2{to{transform:translate(-8vmax,-5vmax) scale(1.08)}}
+@keyframes float3{to{transform:translate(-10vmax,6vmax) scale(.9)}}
+.bg-img{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transition:opacity .6s}
+.bg-img::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,255,255,.18),rgba(255,255,255,.05))}
+html[data-theme="dark"] .bg-img::after{background:rgba(0,0,0,.35)}
+body.has-bg .bg-img{opacity:1}
+body.has-bg .blob{display:none}
 
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
-      background: #0d0d12;
-      color: var(--text-primary);
-      min-height: 100vh;
-      overflow-x: hidden;
-      line-height: 1.5;
-    }
+/* ---------- Topbar ---------- */
+.topbar{position:fixed;top:0;left:0;right:0;z-index:20;display:flex;align-items:center;justify-content:space-between;
+  padding:calc(14px + env(safe-area-inset-top)) clamp(14px,3vw,32px) 10px;pointer-events:none}
+.topbar>*{pointer-events:auto;position:relative}
+.topbar::before{content:"";position:absolute;inset:0 0 -14px;z-index:0;pointer-events:none;
+  background:linear-gradient(180deg,var(--bg1),transparent);opacity:.9;
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  -webkit-mask-image:linear-gradient(#000 55%,transparent);mask-image:linear-gradient(#000 55%,transparent)}
+.brand{display:flex;align-items:center;gap:10px;font-weight:600;font-size:.9rem;color:var(--muted);
+  padding:8px 14px;border-radius:999px;background:var(--glass);border:1px solid var(--glass-border);
+  backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%)}
+.brand i{width:9px;height:9px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2))}
+.tools{display:flex;gap:10px;align-items:center}
+.icon-btn,.pill-btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  height:44px;min-width:44px;padding:0 14px;border-radius:999px;font-weight:600;font-size:.9rem;
+  background:var(--glass);border:1px solid var(--glass-border);box-shadow:var(--shadow);
+  backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);
+  transition:transform .2s var(--ease),background .2s,box-shadow .2s}
+.icon-btn{padding:0;width:44px}
+.icon-btn:hover,.pill-btn:hover{transform:translateY(-1px);background:var(--glass-strong)}
+.icon-btn:active,.pill-btn:active{transform:scale(.95)}
+.icon-btn svg,.pill-btn svg{width:21px;height:21px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.pill-btn.on{background:var(--accent);color:#fff;border-color:transparent}
+#gearBtn svg{transition:transform .5s var(--ease)}
+#gearBtn:hover svg{transform:rotate(60deg)}
 
-    /* Animated gradient background */
-    .bg {
-      position: fixed;
-      inset: 0;
-      z-index: -2;
-      background: 
-        radial-gradient(ellipse 80% 60% at 20% 10%, rgba(10, 132, 255, 0.35), transparent 50%),
-        radial-gradient(ellipse 70% 50% at 80% 20%, rgba(175, 82, 222, 0.28), transparent 50%),
-        radial-gradient(ellipse 60% 40% at 50% 90%, rgba(255, 69, 58, 0.18), transparent 50%),
-        radial-gradient(ellipse 50% 30% at 10% 70%, rgba(50, 215, 75, 0.12), transparent 50%),
-        #0d0d12;
-      animation: bgShift 18s ease-in-out infinite alternate;
-    }
+/* ---------- Layout ---------- */
+main{min-height:100vh;min-height:100dvh;display:flex;align-items:center;justify-content:center;
+  padding:calc(84px + env(safe-area-inset-top)) clamp(14px,3vw,40px) calc(36px + env(safe-area-inset-bottom))}
+.screen{display:none;width:100%;max-width:980px}
+.screen.active{display:block;animation:screenIn .6s var(--ease) both}
+@keyframes screenIn{from{opacity:0;transform:translateY(18px) scale(.985)}to{opacity:1;transform:none}}
+.card{background:var(--glass);border:1px solid var(--glass-border);border-radius:32px;box-shadow:var(--shadow);
+  backdrop-filter:blur(28px) saturate(180%);-webkit-backdrop-filter:blur(28px) saturate(180%)}
 
-    @keyframes bgShift {
-      0% { filter: hue-rotate(0deg) brightness(1); }
-      100% { filter: hue-rotate(25deg) brightness(1.08); }
-    }
+/* ---------- Start ---------- */
+.hero{padding:clamp(28px,6vw,72px);text-align:center}
+.eyebrow{display:inline-block;font-size:.8rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--accent);background:var(--accent-soft);padding:7px 16px;border-radius:999px;margin-bottom:26px}
+.hero h1{font-size:clamp(2rem,5.2vw,3.6rem);line-height:1.08;font-weight:800;letter-spacing:-.03em}
+.hero h1 span{background:linear-gradient(120deg,var(--accent),var(--accent2) 60%,#bf5af2);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p.lead{margin:22px auto 0;max-width:36em;font-size:clamp(1.05rem,2vw,1.3rem);line-height:1.55;color:var(--muted)}
+.facts{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:38px auto 0;max-width:720px}
+.fact{padding:18px 12px;border-radius:22px;background:var(--ans);border:1px solid var(--line)}
+.fact b{display:block;font-size:clamp(1.6rem,3.4vw,2.3rem);font-weight:800;letter-spacing:-.03em}
+.fact small{display:block;margin-top:4px;font-size:.88rem;color:var(--muted);line-height:1.3}
+.btn-primary{
+  display:inline-flex;align-items:center;justify-content:center;gap:10px;margin-top:40px;
+  padding:20px 44px;border-radius:999px;font-size:clamp(1.15rem,2vw,1.4rem);font-weight:700;color:#fff;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  box-shadow:0 12px 30px rgba(0,113,227,.35),inset 0 1px 0 rgba(255,255,255,.35);
+  transition:transform .25s var(--ease),box-shadow .25s,filter .2s}
+.btn-primary:hover{transform:translateY(-3px);box-shadow:0 18px 40px rgba(0,113,227,.42),inset 0 1px 0 rgba(255,255,255,.35);filter:brightness(1.05)}
+.btn-primary:active{transform:scale(.97)}
+.btn-primary:disabled,.btn-ghost:disabled{opacity:.4;cursor:not-allowed;transform:none;box-shadow:none;filter:none}
+.btn-ghost{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  padding:16px 30px;border-radius:999px;font-size:1.05rem;font-weight:650;
+  background:var(--ans);border:1px solid var(--line);box-shadow:0 2px 10px rgba(0,0,0,.05);
+  transition:transform .2s var(--ease),background .2s,box-shadow .2s}
+.btn-ghost:hover{transform:translateY(-2px);background:var(--glass-strong);box-shadow:0 8px 22px rgba(0,0,0,.10)}
+.btn-ghost:active{transform:scale(.97)}
 
-    /* Noise texture overlay for depth */
-    .noise {
-      position: fixed;
-      inset: 0;
-      z-index: -1;
-      opacity: 0.04;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-      pointer-events: none;
-    }
+/* ---------- Quiz ---------- */
+.quiz{padding:clamp(20px,3.6vw,44px)}
+.q-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
+.q-count{font-weight:700;font-size:1rem;color:var(--accent);letter-spacing:.02em}
+.q-score{font-size:.9rem;color:var(--muted);font-weight:600}
+.progress{height:10px;border-radius:99px;background:var(--line);overflow:hidden}
+.progress>div{height:100%;width:0;border-radius:99px;background:linear-gradient(90deg,var(--accent),var(--accent2));
+  transition:width .6s var(--ease);box-shadow:0 0 14px rgba(94,92,230,.45)}
+.dots{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+.dot{width:32px;height:32px;border-radius:50%;font-size:.8rem;font-weight:700;display:grid;place-items:center;
+  background:var(--ans);border:1px solid var(--line);color:var(--muted);transition:transform .2s var(--ease),background .2s}
+.dot:hover:not(:disabled){transform:scale(1.12)}
+.dot:disabled{opacity:.45;cursor:default}
+.dot.cur{border-color:var(--accent);color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.dot.ok{background:var(--ok-bg);border-color:var(--ok-line);color:var(--ok)}
+.dot.bad{background:var(--bad-bg);border-color:var(--bad-line);color:var(--bad)}
+.q-body{margin-top:26px}
+.q-body.slide-next{animation:slideNext .5s var(--ease) both}
+.q-body.slide-prev{animation:slidePrev .5s var(--ease) both}
+@keyframes slideNext{from{opacity:0;transform:translateX(44px)}to{opacity:1;transform:none}}
+@keyframes slidePrev{from{opacity:0;transform:translateX(-44px)}to{opacity:1;transform:none}}
+.q-text{font-size:clamp(1.35rem,2.9vw,2.15rem);line-height:1.25;font-weight:750;letter-spacing:-.025em}
+.answers{display:grid;gap:14px;margin-top:28px;grid-template-columns:1fr}
+.ans{
+  display:flex;align-items:center;gap:16px;text-align:left;width:100%;
+  padding:clamp(14px,2vw,22px);border-radius:22px;font-size:clamp(1.02rem,1.9vw,1.3rem);line-height:1.35;font-weight:550;
+  background:var(--ans);border:2px solid var(--line);box-shadow:0 2px 10px rgba(0,0,0,.04);
+  transition:transform .22s var(--ease),box-shadow .22s,background .25s,border-color .25s}
+.ans .letter{flex:none;width:2.4em;height:2.4em;border-radius:14px;display:grid;place-items:center;font-weight:800;font-size:.95em;
+  background:var(--accent-soft);color:var(--accent);transition:background .25s,color .25s}
+.ans .txt{flex:1}
+.ans .tag{flex:none;font-size:.72em;font-weight:700;padding:5px 11px;border-radius:99px;background:rgba(0,0,0,.07);color:var(--muted);white-space:nowrap}
+html[data-theme="dark"] .ans .tag{background:rgba(255,255,255,.12)}
+.ans:not(.locked):hover{transform:translateY(-3px);box-shadow:0 14px 30px rgba(0,60,160,.16);border-color:var(--accent);background:var(--glass-strong)}
+.ans:not(.locked):active{transform:scale(.985)}
+.ans.locked{cursor:default}
+.ans.correct{background:var(--ok-bg);border-color:var(--ok-line);box-shadow:0 8px 24px rgba(52,199,89,.22)}
+.ans.correct .letter{background:var(--ok-line);color:#fff}
+.ans.wrong{background:var(--bad-bg);border-color:var(--bad-line)}
+.ans.wrong .letter{background:var(--bad-line);color:#fff}
+.ans.wrong:not(.chosen){opacity:.88}
+.ans.chosen{outline:3px solid rgba(0,0,0,.14);outline-offset:2px}
+html[data-theme="dark"] .ans.chosen{outline-color:rgba(255,255,255,.35)}
+.ans.reveal.correct{animation:pop .65s var(--ease) both}
+.ans.reveal.wrong{animation:soft .5s var(--ease) both}
+@keyframes pop{0%{transform:scale(1)}35%{transform:scale(1.035);box-shadow:0 0 0 10px rgba(52,199,89,.25)}100%{transform:scale(1)}}
+@keyframes soft{0%{opacity:.4}100%{opacity:.88}}
 
-    /* Glass utility */
-    .glass {
-      background: var(--glass-bg);
-      backdrop-filter: blur(28px) saturate(180%);
-      -webkit-backdrop-filter: blur(28px) saturate(180%);
-      border: 1px solid var(--glass-border);
-      border-radius: var(--card-radius);
-      box-shadow: 
-        var(--shadow),
-        inset 0 1px 0 var(--glass-highlight);
-    }
+.feedback{display:none;margin-top:24px;padding:clamp(16px,2.4vw,26px);border-radius:24px;border:2px solid var(--line);
+  background:var(--glass-strong)}
+.feedback.show{display:block}
+.feedback.show.reveal{animation:fbIn .55s var(--ease) both}
+@keyframes fbIn{from{opacity:0;transform:translateY(14px) scale(.98)}to{opacity:1;transform:none}}
+.feedback.ok{border-color:var(--ok-line);background:linear-gradient(180deg,var(--ok-bg),var(--glass-strong))}
+.feedback.bad{border-color:var(--bad-line);background:linear-gradient(180deg,var(--bad-bg),var(--glass-strong))}
+.fb-top{display:flex;align-items:center;gap:16px}
+.fb-badge{flex:none;width:52px;height:52px;border-radius:50%;display:grid;place-items:center;color:#fff}
+.fb-badge svg{width:28px;height:28px;stroke:#fff;fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.feedback.ok .fb-badge{background:var(--ok-line)}
+.feedback.bad .fb-badge{background:var(--bad-line)}
+.feedback.reveal .fb-badge{animation:badge .6s var(--ease) .1s both}
+@keyframes badge{from{transform:scale(0) rotate(-40deg)}to{transform:none}}
+.fb-title{font-size:clamp(1.3rem,2.6vw,1.9rem);font-weight:800;letter-spacing:-.02em}
+.feedback.ok .fb-title{color:var(--ok)}
+.feedback.bad .fb-title{color:var(--bad)}
+.fb-sub{font-size:clamp(1rem,1.8vw,1.2rem);color:var(--muted);margin-top:2px;font-weight:550}
+.fb-expl{margin-top:14px;padding-top:14px;border-top:1px solid var(--line);font-size:clamp(1rem,1.8vw,1.2rem);line-height:1.55}
+.fb-expl b{font-weight:750}
 
-    /* Header */
-    header {
-      padding: 2.5rem 1.5rem 1.5rem;
-      text-align: center;
-      max-width: 900px;
-      margin: 0 auto;
-    }
+.nav{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:28px;flex-wrap:wrap}
+.nav .hint{flex:1;text-align:center;font-size:.9rem;color:var(--muted);min-width:140px}
+.nav .btn-primary{margin-top:0;padding:16px 34px;font-size:1.1rem}
+.nav .btn-ghost{padding:16px 28px}
 
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      padding: 0.35rem 0.9rem;
-      font-size: 0.75rem;
-      font-weight: 600;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      color: var(--accent);
-      background: var(--accent-soft);
-      border-radius: 100px;
-      border: 1px solid rgba(10, 132, 255, 0.3);
-      margin-bottom: 1.25rem;
-    }
+/* ---------- Ergebnis ---------- */
+.result{padding:clamp(26px,5vw,60px);text-align:center}
+.ring{position:relative;width:min(280px,64vw);aspect-ratio:1;margin:8px auto 0}
+.ring svg{width:100%;height:100%;transform:rotate(-90deg)}
+.ring circle{fill:none;stroke-width:14;stroke-linecap:round}
+.ring .track{stroke:var(--line)}
+.ring .val{stroke:url(#ringGrad);stroke-dasharray:0 1000;transition:stroke-dasharray 1.4s var(--ease)}
+.ring .center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.ring .pct{font-size:clamp(2.8rem,8vw,4.4rem);font-weight:800;letter-spacing:-.04em;line-height:1}
+.ring .of{margin-top:6px;font-size:1.1rem;color:var(--muted);font-weight:600}
+.verdict{margin-top:26px;font-size:clamp(1.6rem,4vw,2.6rem);font-weight:800;letter-spacing:-.03em}
+.verdict-sub{margin-top:8px;font-size:1.1rem;color:var(--muted)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:30px auto 0;max-width:640px}
+.stat{padding:18px 10px;border-radius:22px;background:var(--ans);border:1px solid var(--line)}
+.stat b{display:block;font-size:clamp(1.7rem,4vw,2.5rem);font-weight:800;letter-spacing:-.03em}
+.stat small{font-size:.9rem;color:var(--muted)}
+.stat.ok b{color:var(--ok)} .stat.bad b{color:var(--bad)}
+.review{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:26px}
+.review .dot{width:42px;height:42px;font-size:.95rem}
+.review-label{margin-top:26px;font-size:.9rem;color:var(--muted)}
+.result .btn-primary{margin-top:30px}
 
-    h1 {
-      font-size: clamp(1.9rem, 5vw, 2.75rem);
-      font-weight: 700;
-      letter-spacing: -0.03em;
-      margin-bottom: 0.75rem;
-      background: linear-gradient(135deg, #ffffff 0%, #a0a0b0 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
+/* ---------- Einstellungen ---------- */
+.overlay{position:fixed;inset:0;z-index:50;display:none;background:rgba(10,15,30,.25);
+  backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px)}
+.overlay.open{display:block;animation:fade .25s both}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+.panel{position:absolute;top:calc(68px + env(safe-area-inset-top));right:clamp(14px,3vw,32px);width:min(400px,calc(100vw - 28px));
+  max-height:calc(100dvh - 90px);overflow:auto;padding:22px;border-radius:28px;
+  background:var(--glass-strong);border:1px solid var(--glass-border);box-shadow:0 24px 70px rgba(0,0,0,.28);
+  backdrop-filter:blur(32px) saturate(180%);-webkit-backdrop-filter:blur(32px) saturate(180%);
+  animation:panelIn .35s var(--ease) both;transform-origin:top right}
+@keyframes panelIn{from{opacity:0;transform:scale(.92) translateY(-10px)}to{opacity:1;transform:none}}
+.panel h2{font-size:1.3rem;font-weight:800;letter-spacing:-.02em;display:flex;justify-content:space-between;align-items:center}
+.panel h2 button{width:34px;height:34px;border-radius:50%;background:var(--line);font-size:1.1rem;line-height:1}
+.row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:15px 0;border-bottom:1px solid var(--line)}
+.row:last-of-type{border-bottom:none}
+.row .lbl{font-weight:650;font-size:1rem}
+.row .lbl small{display:block;font-weight:500;font-size:.8rem;color:var(--muted);margin-top:2px}
+.row.col{flex-direction:column;align-items:stretch}
+.btns{display:flex;gap:8px;flex-wrap:wrap}
+.mini{padding:10px 16px;border-radius:12px;font-weight:650;font-size:.9rem;background:var(--accent-soft);color:var(--accent);
+  transition:transform .15s,background .2s}
+.mini:hover{transform:translateY(-1px)} .mini:active{transform:scale(.96)}
+.mini.plain{background:var(--line);color:var(--text)}
+.seg{display:inline-flex;padding:3px;border-radius:12px;background:var(--line)}
+.seg button{padding:8px 16px;border-radius:9px;font-weight:650;font-size:.9rem;transition:background .2s,box-shadow .2s}
+.seg button[aria-pressed="true"]{background:var(--glass-strong);box-shadow:0 2px 8px rgba(0,0,0,.15)}
+.switch{position:relative;flex:none;width:52px;height:31px;border-radius:99px;background:rgba(120,120,128,.32);transition:background .25s}
+.switch::after{content:"";position:absolute;top:2px;left:2px;width:27px;height:27px;border-radius:50%;background:#fff;
+  box-shadow:0 2px 6px rgba(0,0,0,.3);transition:transform .25s var(--ease)}
+.switch[aria-checked="true"]{background:#34c759}
+.switch[aria-checked="true"]::after{transform:translateX(21px)}
+.fsz{display:flex;align-items:center;gap:10px}
+.fsz span{min-width:48px;text-align:center;font-weight:700;font-variant-numeric:tabular-nums}
+.note{font-size:.8rem;color:var(--bad);margin-top:8px;display:none}
+.note.show{display:block}
+.kbd{margin-top:8px;font-size:.78rem;color:var(--muted);line-height:1.5}
 
-    .subtitle {
-      font-size: 1.05rem;
-      color: var(--text-secondary);
-      max-width: 520px;
-      margin: 0 auto;
-      font-weight: 400;
-    }
+/* ---------- Präsentationsmodus ---------- */
+body.pres main{padding-top:calc(70px + env(safe-area-inset-top))}
+body.pres .screen{max-width:min(1560px,96vw)}
+body.pres .brand,body.pres .dots{display:none}
+body.pres .quiz{padding:clamp(24px,3.2vw,56px)}
+body.pres .progress{height:20px}
+body.pres .q-count{font-size:clamp(1.3rem,2.2vw,2.2rem)}
+body.pres .q-score{font-size:clamp(1.1rem,1.8vw,1.8rem)}
+body.pres .q-text{font-size:clamp(1.9rem,3.8vw,4rem);line-height:1.2}
+body.pres .answers{gap:clamp(14px,1.6vw,26px);margin-top:clamp(22px,3vw,44px)}
+@media (min-width:900px){body.pres .answers{grid-template-columns:1fr 1fr}}
+body.pres .ans{font-size:clamp(1.3rem,2.3vw,2.5rem);padding:clamp(18px,2.2vw,34px);border-radius:28px}
+body.pres .fb-title{font-size:clamp(1.8rem,3.2vw,3.2rem)}
+body.pres .fb-sub,body.pres .fb-expl{font-size:clamp(1.25rem,2vw,2.1rem)}
+body.pres .fb-badge{width:72px;height:72px}
+body.pres .nav .btn-primary,body.pres .nav .btn-ghost{font-size:clamp(1.2rem,1.8vw,1.8rem);padding:clamp(16px,1.6vw,26px) clamp(28px,3vw,52px)}
+body.pres .nav .hint{font-size:1.1rem}
+body.pres .hero h1{font-size:clamp(2.6rem,6vw,6rem)}
+body.pres .hero p.lead{font-size:clamp(1.3rem,2.4vw,2.2rem);max-width:30em}
+body.pres .fact small{font-size:clamp(1rem,1.5vw,1.5rem)}
+body.pres .btn-primary{font-size:clamp(1.5rem,2.4vw,2.4rem);padding:26px 64px}
+body.pres .verdict{font-size:clamp(2.2rem,5vw,5rem)}
+body.pres .stat small,body.pres .verdict-sub{font-size:clamp(1.1rem,1.6vw,1.6rem)}
 
-    /* Main content */
-    main {
-      max-width: 860px;
-      margin: 0 auto;
-      padding: 0 1.25rem 4rem;
-    }
+/* ---------- Responsive ---------- */
+@media (max-width:640px){
+  .facts,.stats{gap:8px}
+  .pill-btn .lbl-t{display:none}
+  .pill-btn{padding:0;width:44px}
+  .brand{display:none}
+  .tools{margin-left:auto}
+  .nav{flex-direction:column-reverse}
+  .nav>*{width:100%}
+  .nav .hint{order:-1}
+  .ans .tag{display:none}
+  .panel{left:14px;right:14px;width:auto}
+}
 
-    .intro {
-      text-align: center;
-      margin-bottom: 2.5rem;
-      padding: 1.25rem 1.5rem;
-    }
-
-    .intro p {
-      color: var(--text-secondary);
-      font-size: 0.95rem;
-    }
-
-    /* Source cards */
-    .sources {
-      display: flex;
-      flex-direction: column;
-      gap: 1.15rem;
-    }
-
-    .source-card {
-      padding: 1.4rem 1.5rem;
-      transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
-                  box-shadow 0.35s ease,
-                  background 0.3s ease;
-      cursor: default;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .source-card::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-      opacity: 0.6;
-    }
-
-    .source-card:hover {
-      transform: translateY(-4px) scale(1.01);
-      background: rgba(255, 255, 255, 0.16);
-      box-shadow: 
-        0 16px 48px rgba(0, 0, 0, 0.35),
-        inset 0 1px 0 rgba(255, 255, 255, 0.4);
-    }
-
-    .source-header {
-      display: flex;
-      align-items: flex-start;
-      gap: 1rem;
-      margin-bottom: 0.9rem;
-    }
-
-    .source-number {
-      flex-shrink: 0;
-      width: 36px;
-      height: 36px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.9rem;
-      font-weight: 700;
-      color: var(--accent);
-      background: var(--accent-soft);
-      border-radius: 12px;
-      border: 1px solid rgba(10, 132, 255, 0.35);
-    }
-
-    .source-title {
-      font-size: 1.15rem;
-      font-weight: 650;
-      letter-spacing: -0.02em;
-      line-height: 1.3;
-      padding-top: 0.3rem;
-    }
-
-    .source-topics {
-      list-style: none;
-      padding-left: 0.25rem;
-      display: grid;
-      gap: 0.45rem;
-    }
-
-    .source-topics li {
-      position: relative;
-      padding-left: 1.15rem;
-      font-size: 0.92rem;
-      color: var(--text-secondary);
-      transition: color 0.2s ease;
-    }
-
-    .source-card:hover .source-topics li {
-      color: rgba(255, 255, 255, 0.88);
-    }
-
-    .source-topics li::before {
-      content: "";
-      position: absolute;
-      left: 0;
-      top: 0.55em;
-      width: 5px;
-      height: 5px;
-      border-radius: 50%;
-      background: var(--accent);
-      opacity: 0.7;
-    }
-
-    /* Footer */
-    footer {
-      text-align: center;
-      padding: 2rem 1.5rem 3rem;
-      color: rgba(255, 255, 255, 0.35);
-      font-size: 0.8rem;
-    }
-
-    footer span {
-      color: rgba(255, 255, 255, 0.5);
-    }
-
-    /* Subtle entrance animation */
-    .source-card {
-      opacity: 0;
-      transform: translateY(18px);
-      animation: fadeUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-    }
-
-    .source-card:nth-child(1) { animation-delay: 0.08s; }
-    .source-card:nth-child(2) { animation-delay: 0.16s; }
-    .source-card:nth-child(3) { animation-delay: 0.24s; }
-    .source-card:nth-child(4) { animation-delay: 0.32s; }
-    .source-card:nth-child(5) { animation-delay: 0.40s; }
-
-    @keyframes fadeUp {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    /* Responsive */
-    @media (max-width: 600px) {
-      header {
-        padding: 2rem 1rem 1rem;
-      }
-      .source-card {
-        padding: 1.2rem 1.15rem;
-      }
-      .source-title {
-        font-size: 1.05rem;
-      }
-    }
-  </style>
+/* ---------- Animationen aus ---------- */
+body.no-anim *,body.no-anim *::before,body.no-anim *::after{animation:none!important;transition:none!important}
+body.no-anim .ring .val{transition:none!important}
+@media (prefers-reduced-motion:reduce){.blob{animation:none}}
+@media print{.topbar{display:none}}
+</style>
 </head>
 <body>
-  <div class="bg"></div>
-  <div class="noise"></div>
 
-  <header>
-    <div class="badge">
-      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+<div class="bg" aria-hidden="true">
+  <div class="bg-img" id="bgImg"></div>
+  <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
+</div>
+
+<header class="topbar">
+  <div class="brand"><i></i>Geschichte · Gastarbeiter</div>
+  <div class="tools">
+    <button class="pill-btn" id="presBtn" aria-pressed="false" title="Präsentationsmodus">
+      <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg>
+      <span class="lbl-t">Präsentation</span>
+    </button>
+    <button class="icon-btn" id="fsBtn" title="Vollbild" aria-label="Vollbild">
+      <svg viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>
+    </button>
+    <button class="icon-btn" id="gearBtn" title="Einstellungen" aria-label="Einstellungen" aria-haspopup="dialog">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>
+    </button>
+  </div>
+</header>
+
+<main>
+  <!-- STARTSEITE -->
+  <section class="screen active card hero" id="screenStart">
+    <span class="eyebrow">Live-Quiz</span>
+    <h1>Quiz: <span>Die italienischen Gastarbeiter in der BRD</span></h1>
+    <p class="lead">Teste dein Wissen über die Geschichte der italienischen Gastarbeiter in der Bundesrepublik Deutschland nach dem Zweiten Weltkrieg.</p>
+    <div class="facts">
+      <div class="fact"><b>10</b><small>Fragen</small></div>
+      <div class="fact"><b>4</b><small>Antwortmöglichkeiten je Frage</small></div>
+      <div class="fact"><b>1</b><small>richtige Antwort</small></div>
+    </div>
+    <button class="btn-primary" id="startBtn">Quiz starten
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </button>
+  </section>
+
+  <!-- QUIZ -->
+  <section class="screen card quiz" id="screenQuiz" aria-live="polite">
+    <div class="q-head">
+      <div class="q-count" id="qCount">Frage 1 von 10</div>
+      <div class="q-score" id="qScore"></div>
+    </div>
+    <div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="10" id="progress"><div id="progressBar"></div></div>
+    <div class="dots" id="dots"></div>
+    <div class="q-body" id="qBody">
+      <h2 class="q-text" id="qText"></h2>
+      <div class="answers" id="answers"></div>
+      <div class="feedback" id="feedback">
+        <div class="fb-top">
+          <div class="fb-badge" id="fbBadge"></div>
+          <div><div class="fb-title" id="fbTitle"></div><div class="fb-sub" id="fbSub"></div></div>
+        </div>
+        <div class="fb-expl" id="fbExpl"></div>
+      </div>
+    </div>
+    <div class="nav">
+      <button class="btn-ghost" id="prevBtn">← Zurück</button>
+      <div class="hint" id="navHint"></div>
+      <button class="btn-primary" id="nextBtn">Weiter →</button>
+    </div>
+  </section>
+
+  <!-- ERGEBNIS -->
+  <section class="screen card result" id="screenResult">
+    <div class="eyebrow">Ergebnis</div>
+    <div class="ring">
+      <svg viewBox="0 0 120 120">
+        <defs><linearGradient id="ringGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#34c759"/><stop offset="1" stop-color="#0a84ff"/></linearGradient></defs>
+        <circle class="track" cx="60" cy="60" r="52"/>
+        <circle class="val" id="ringVal" cx="60" cy="60" r="52"/>
       </svg>
-      Quellenverzeichnis
+      <div class="center"><div class="pct" id="resPct">0%</div><div class="of" id="resOf">0 von 10</div></div>
     </div>
-    <h1>Italienische Gastarbeiter</h1>
-    <p class="subtitle">
-      Quellen und Hintergründe zum deutsch-italienischen Anwerbeabkommen und der Migration in die Bundesrepublik
-    </p>
-  </header>
+    <div class="verdict" id="verdict"></div>
+    <div class="verdict-sub" id="verdictSub"></div>
+    <div class="stats">
+      <div class="stat ok"><b id="resOk">0</b><small>richtig</small></div>
+      <div class="stat bad"><b id="resBad">0</b><small>falsch</small></div>
+      <div class="stat"><b id="resPct2">0%</b><small>erreicht</small></div>
+    </div>
+    <div class="review-label">Antworten ansehen – tippe auf eine Frage:</div>
+    <div class="review" id="review"></div>
+    <button class="btn-primary" id="restartBtn">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg>
+      Quiz erneut starten
+    </button>
+  </section>
+</main>
 
-  <main>
-    <div class="intro glass">
-      <p>
-        Die folgenden Quellen bieten vertiefte Informationen zu den Gründen der Anwerbung, 
-        den Arbeits- und Lebensbedingungen sowie der Integration italienischer Gastarbeiter 
-        in der Bundesrepublik Deutschland ab 1955.
-      </p>
+<!-- EINSTELLUNGEN -->
+<div class="overlay" id="overlay">
+  <div class="panel" role="dialog" aria-modal="true" aria-labelledby="setTitle">
+    <h2 id="setTitle">Einstellungen <button id="closeSet" aria-label="Schließen">✕</button></h2>
+
+    <div class="row col">
+      <div class="lbl">Hintergrundbild<small>Eigenes Bild von diesem Computer wählen</small></div>
+      <div class="btns">
+        <button class="mini" id="bgPick">Bild auswählen…</button>
+        <button class="mini plain" id="bgReset">Zurücksetzen</button>
+      </div>
+      <input type="file" id="bgFile" accept="image/*" hidden>
+      <div class="note" id="bgNote">Das Bild wird nur für diese Sitzung verwendet (zu groß zum Speichern).</div>
     </div>
 
-    <div class="sources">
-
-      <!-- Quelle 1 -->
-      <article class="source-card glass">
-        <div class="source-header">
-          <div class="source-number">1</div>
-          <h2 class="source-title">Bundeszentrale für politische Bildung (bpb)</h2>
-        </div>
-        <ul class="source-topics">
-          <li>Informationen zum Wirtschaftswunder in der BRD</li>
-          <li>Gründe für die Anwerbung italienischer Gastarbeiter</li>
-          <li>Anwerbeabkommen von 1955</li>
-          <li>Arbeitslosigkeit in Italien</li>
-        </ul>
-      </article>
-
-      <!-- Quelle 2 -->
-      <article class="source-card glass">
-        <div class="source-header">
-          <div class="source-number">2</div>
-          <h2 class="source-title">Stiftung Haus der Geschichte – LeMO</h2>
-        </div>
-        <ul class="source-topics">
-          <li>Informationen über die Arbeit der Gastarbeiter</li>
-          <li>Wohnheime und Unterkünfte</li>
-          <li>Sprachprobleme und Integration</li>
-          <li>Anwerbestopp 1973</li>
-        </ul>
-      </article>
-
-      <!-- Quelle 3 -->
-      <article class="source-card glass">
-        <div class="source-header">
-          <div class="source-number">3</div>
-          <h2 class="source-title">Bundesregierung</h2>
-        </div>
-        <ul class="source-topics">
-          <li>Gründe für den Arbeitskräftemangel</li>
-          <li>Arbeitsbedingungen in Deutschland</li>
-          <li>Leben in Baracken und Wohnheimen</li>
-          <li>Wirtschaftskrise und Anwerbestopp</li>
-        </ul>
-      </article>
-
-      <!-- Quelle 4 -->
-      <article class="source-card glass">
-        <div class="source-header">
-          <div class="source-number">4</div>
-          <h2 class="source-title">Landesarchiv Baden-Württemberg</h2>
-        </div>
-        <ul class="source-topics">
-          <li>Deutsch-italienisches Anwerbeabkommen vom 20. Dezember 1955</li>
-          <li>Ankunft der ersten italienischen Gastarbeiter</li>
-          <li>Schwierigkeiten im Alltag</li>
-          <li>Schlechte Unterkünfte und Arbeitsbedingungen</li>
-        </ul>
-      </article>
-
-      <!-- Quelle 5 -->
-      <article class="source-card glass">
-        <div class="source-header">
-          <div class="source-number">5</div>
-          <h2 class="source-title">Auswärtiges Amt</h2>
-        </div>
-        <ul class="source-topics">
-          <li>Geschichte des Anwerbeabkommens</li>
-          <li>Gründe für die Migration aus Italien</li>
-          <li>Vorurteile und Diskriminierung</li>
-          <li>Dauerhafte Niederlassung italienischer Familien in Deutschland</li>
-        </ul>
-      </article>
-
+    <div class="row">
+      <div class="lbl">Designmodus</div>
+      <div class="seg" role="group" aria-label="Designmodus">
+        <button id="themeLight" aria-pressed="true">Hell</button>
+        <button id="themeDark" aria-pressed="false">Dunkel</button>
+      </div>
     </div>
-  </main>
 
-  <footer>
-    Präsentationsquelle · <span>Italienische Gastarbeiter</span>
-  </footer>
+    <div class="row">
+      <div class="lbl">Animationen</div>
+      <button class="switch" id="swAnim" role="switch" aria-checked="true" aria-label="Animationen"></button>
+    </div>
 
-  <script>
-    // Optional: subtle parallax on mouse move for glass cards
-    document.querySelectorAll('.source-card').forEach(card => {
-      card.addEventListener('mousemove', (e) => {
-        const rect = card.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
-        const rotateX = (y - centerY) / 28;
-        const rotateY = (centerX - x) / 28;
-        card.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-4px) scale(1.01)`;
-      });
-      card.addEventListener('mouseleave', () => {
-        card.style.transform = '';
-      });
-    });
-  </script>
+    <div class="row">
+      <div class="lbl">Schriftgröße</div>
+      <div class="fsz">
+        <button class="mini plain" id="fsMinus" aria-label="Schrift kleiner">A−</button>
+        <span id="fsVal">100%</span>
+        <button class="mini plain" id="fsPlus" aria-label="Schrift größer">A+</button>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="lbl">Soundeffekte<small>Dezente Töne bei richtig / falsch</small></div>
+      <button class="switch" id="swSound" role="switch" aria-checked="false" aria-label="Soundeffekte"></button>
+    </div>
+
+    <div class="row">
+      <div class="lbl">Präsentationsmodus<small>Große Schrift für den Beamer</small></div>
+      <button class="switch" id="swPres" role="switch" aria-checked="false" aria-label="Präsentationsmodus"></button>
+    </div>
+
+    <div class="kbd">Tastatur: <b>A–D</b> oder <b>1–4</b> wählt eine Antwort · <b>←</b> / <b>→</b> navigiert · <b>Esc</b> schließt.</div>
+  </div>
+</div>
+
+<script>
+(function(){
+"use strict";
+
+/* ===================== FRAGEN ===================== */
+var QUESTIONS = [
+  {
+    q: "Wie nennt man die Zeit des sehr schnellen Wirtschaftswachstums in der BRD in den 1950er-Jahren, in der viele neue Arbeitsplätze entstanden und Arbeiter fehlten?",
+    a: ["Gründerzeit", "Wirtschaftswunder", "Industrielle Revolution", "Goldene Zwanziger"],
+    c: 1,
+    e: "Nach dem Krieg wurde Deutschland wieder aufgebaut und die Wirtschaft wuchs in den 1950er-Jahren sehr schnell. Diese Zeit nennt man <b>Wirtschaftswunder</b>. Es entstanden viele Arbeitsplätze, aber Deutschland hatte zu wenige Arbeiter."
+  },
+  {
+    q: "Welche Lage herrschte in Italien, besonders im Süden, und war ein wichtiger Grund für die Auswanderung nach Deutschland?",
+    a: ["Vollbeschäftigung durch ein starkes Wirtschaftswunder", "Ein Mangel an Arbeitskräften in den Fabriken", "Ein staatliches Verbot, das Land zu verlassen", "Viel Arbeitslosigkeit und Armut"],
+    c: 3,
+    e: "In Italien gab es viel <b>Arbeitslosigkeit</b>, besonders im Süden herrschte <b>Armut</b>. Viele Italiener wollten mehr Geld verdienen und ihre Familien finanziell unterstützen."
+  },
+  {
+    q: "Wann wurde das Anwerbeabkommen zwischen Italien und der Bundesrepublik Deutschland geschlossen?",
+    a: ["20. Dezember 1945", "20. Dezember 1955", "20. Dezember 1965", "20. Dezember 1975"],
+    c: 1,
+    e: "Das Abkommen wurde am <b>20. Dezember 1955</b> geschlossen. Es regelte die Anwerbung italienischer Arbeiter, 1956 kamen dann die ersten größeren Gruppen in Deutschland an."
+  },
+  {
+    q: "Wie lief die Anwerbung italienischer Arbeiter ab?",
+    a: ["Interessierte meldeten sich in Italien, wurden medizinisch untersucht und bekamen dann einen Arbeitsplatz vermittelt.", "Sie reisten zuerst auf eigene Faust nach Deutschland und suchten dort selbst eine Stelle.", "Nur wer bereits gut Deutsch sprach, durfte sich bewerben.", "Sie wurden zuerst einer Firma zugeteilt und erst nach der Ankunft in Deutschland medizinisch untersucht."],
+    c: 0,
+    e: "Wer interessiert war, konnte sich <b>in Italien melden</b>. Die Bewerber wurden <b>medizinisch untersucht</b> und bekamen <b>anschließend Arbeitsplätze vermittelt</b>. Viele konnten anfangs kaum Deutsch."
+  },
+  {
+    q: "Wie lange wollten viele Gastarbeiter zunächst in Deutschland bleiben?",
+    a: ["Nur wenige Wochen", "Bis zu ihrer Rente", "Zunächst nur einige Jahre", "Von Anfang an für immer"],
+    c: 2,
+    e: "Viele wollten <b>zunächst nur einige Jahre</b> bleiben, Geld verdienen und dann zurückkehren. Später fanden viele in Deutschland eine zweite Heimat."
+  },
+  {
+    q: "In welchen Bereichen arbeiteten laut Vortrag viele Männer und viele Frauen?",
+    a: ["Männer in der Textilindustrie, Frauen in der Metallindustrie", "Männer in der Metallindustrie, Frauen in Textilfabriken", "Männer in Büros, Frauen im Straßenbau", "Männer in Textilfabriken, Frauen im Bergbau"],
+    c: 1,
+    e: "Viele Männer arbeiteten in der <b>Metallindustrie</b>, Frauen beispielsweise in <b>Textilfabriken</b>. Ihre Arbeit war wichtig für das Wirtschaftswunder."
+  },
+  {
+    q: "Wie wohnten viele Gastarbeiter in Deutschland?",
+    a: ["In eigenen Wohnungen zusammen mit ihrer ganzen Familie", "Bei deutschen Gastfamilien", "In komfortablen Hotels, die ihre Arbeitgeber bezahlten", "Oft in einfachen Wohnheimen, wo sich mehrere Personen ein Zimmer teilten"],
+    c: 3,
+    e: "Viele lebten in <b>einfachen Wohnheimen</b>. Oft teilten sich mehrere Personen ein Zimmer, deshalb gab es <b>wenig Privatsphäre</b>."
+  },
+  {
+    q: "Mit welchen Schwierigkeiten hatten viele Gastarbeiter im Alltag zu kämpfen?",
+    a: ["Sprachprobleme und Vorurteile – manche fühlten sich ausgegrenzt", "Sie hatten keine Möglichkeit, Geld nach Hause zu schicken", "Sie hatten zu viel Kontakt zu Deutschen und zu wenig Ruhe", "Sie durften ihre Familien grundsätzlich nie nach Deutschland holen"],
+    c: 0,
+    e: "Viele konnten anfangs <b>kaum Deutsch</b>, das führte zu Verständigungsproblemen. Manche Deutsche hatten <b>Vorurteile</b>, einige Gastarbeiter wurden ausgegrenzt und fühlten sich einsam."
+  },
+  {
+    q: "Was war mit den Familien der Gastarbeiter oft zunächst?",
+    a: ["Sie reisten fast immer sofort gemeinsam mit nach Deutschland.", "Sie blieben dauerhaft in Italien, niemand holte sie nach.", "Sie blieben oft zunächst in Italien; später holten manche ihre Familien nach Deutschland.", "Sie lebten von Anfang an in eigenen Häusern in Deutschland."],
+    c: 2,
+    e: "Die Familien <b>blieben oft zunächst in Italien</b>, viele Gastarbeiter hatten Heimweh. <b>Später holten manche ihre Familien nach Deutschland</b>."
+  },
+  {
+    q: "Welche „Sonnenseite“ des Lebens als Gastarbeiter wird im Vortrag genannt?",
+    a: ["Sie arbeiteten nur kurze Zeit am Tag.", "Sie lebten von Beginn an in großen, komfortablen Wohnungen.", "Sie wurden überall sofort herzlich aufgenommen und fühlten sich nie fremd.", "Viele schickten regelmäßig Geld nach Hause, manche konnten sich sogar ein eigenes Haus leisten."],
+    c: 3,
+    e: "In Deutschland konnten sie <b>mehr Geld verdienen</b>. Viele <b>schickten regelmäßig Geld nach Hause</b> und unterstützten ihre Familien, manche konnten sich <b>ein eigenes Haus leisten</b>."
+  }
+];
+var N = QUESTIONS.length;
+var LETTERS = ["A","B","C","D"];
+
+var OK_TITLES   = ["Richtig!"];
+var OK_SUBS     = ["Sehr gut aufgepasst!","Genau! Das habt ihr richtig erkannt!","Stark! Das habt ihr gewusst!","Perfekt getroffen – weiter so!","Tolle Teamarbeit – das war richtig!"];
+var BAD_TITLES  = ["Leider falsch!"];
+var BAD_SUBS    = ["Leider nicht ganz! Die richtige Antwort ist {L}.","Knapp daneben! Jetzt wisst ihr es für die nächste Frage.","Nicht ganz – aber jetzt wisst ihr es! Richtig ist {L}.","Schade! Die richtige Antwort ist {L}. Beim nächsten Mal klappt es!"];
+
+var RESULTS = [
+  {max:3,  t:"Da ist noch Luft nach oben!", s:"Mit diesem neuen Wissen klappt es beim nächsten Mal bestimmt besser."},
+  {max:5,  t:"Ein guter Anfang!",           s:"Ihr habt schon einiges mitgenommen – da geht noch mehr."},
+  {max:7,  t:"Gut gemacht!",                s:"Solides Wissen über die italienischen Gastarbeiter."},
+  {max:9,  t:"Sehr gut!",                   s:"Das war richtig stark – fast alles gewusst!"},
+  {max:10, t:"Perfekt! Du bist ein echter Experte!", s:"Alle Fragen richtig – herzlichen Glückwunsch!"}
+];
+
+/* ===================== STATE & EINSTELLUNGEN ===================== */
+var KEY = "gastarbeiterQuiz.settings.v1", BGKEY = "gastarbeiterQuiz.bg.v1";
+var SCALES = [0.85,0.92,1,1.1,1.2,1.3,1.45];
+var settings = {theme:"light", anim:true, sound:false, scaleIdx:2, pres:false};
+var bgData = null;
+var cur = 0, answers = [], started = false;
+
+function $(id){return document.getElementById(id);}
+function load(){
+  try{ var s = JSON.parse(localStorage.getItem(KEY)||"null"); if(s){ for(var k in settings){ if(k in s) settings[k]=s[k]; } } }catch(e){}
+  try{ bgData = localStorage.getItem(BGKEY) || null; }catch(e){}
+  if(typeof settings.scaleIdx!=="number"||settings.scaleIdx<0||settings.scaleIdx>=SCALES.length) settings.scaleIdx=2;
+}
+function save(){ try{ localStorage.setItem(KEY, JSON.stringify(settings)); }catch(e){} }
+
+function applySettings(){
+  var root = document.documentElement;
+  root.setAttribute("data-theme", settings.theme);
+  root.style.setProperty("--scale", SCALES[settings.scaleIdx]);
+  document.body.classList.toggle("no-anim", !settings.anim);
+  document.body.classList.toggle("pres", settings.pres);
+  document.body.classList.toggle("has-bg", !!bgData);
+  $("bgImg").style.backgroundImage = bgData ? 'url("'+bgData+'")' : "none";
+  $("themeLight").setAttribute("aria-pressed", settings.theme==="light");
+  $("themeDark").setAttribute("aria-pressed", settings.theme==="dark");
+  $("swAnim").setAttribute("aria-checked", settings.anim);
+  $("swSound").setAttribute("aria-checked", settings.sound);
+  $("swPres").setAttribute("aria-checked", settings.pres);
+  $("presBtn").setAttribute("aria-pressed", settings.pres);
+  $("presBtn").classList.toggle("on", settings.pres);
+  $("fsVal").textContent = Math.round(SCALES[settings.scaleIdx]*100)+"%";
+  $("fsMinus").disabled = settings.scaleIdx===0;
+  $("fsPlus").disabled = settings.scaleIdx===SCALES.length-1;
+  $("fsMinus").style.opacity = $("fsMinus").disabled?.4:1;
+  $("fsPlus").style.opacity = $("fsPlus").disabled?.4:1;
+}
+
+/* ===================== SOUND ===================== */
+var actx = null;
+function tone(freq, start, dur, vol, type){
+  var o = actx.createOscillator(), g = actx.createGain(), t0 = actx.currentTime + start;
+  o.type = type||"sine"; o.frequency.setValueAtTime(freq, t0);
+  g.gain.setValueAtTime(0.0001, t0);
+  g.gain.exponentialRampToValueAtTime(vol, t0+0.02);
+  g.gain.exponentialRampToValueAtTime(0.0001, t0+dur);
+  o.connect(g); g.connect(actx.destination); o.start(t0); o.stop(t0+dur+0.05);
+}
+function playSound(ok){
+  if(!settings.sound) return;
+  try{
+    actx = actx || new (window.AudioContext||window.webkitAudioContext)();
+    if(actx.state==="suspended") actx.resume();
+    if(ok){ tone(523.25,0,.22,.12); tone(659.25,.11,.22,.12); tone(783.99,.22,.38,.12); }
+    else  { tone(246.94,0,.25,.10,"triangle"); tone(196,.17,.4,.10,"triangle"); }
+  }catch(e){}
+}
+
+/* ===================== ANZEIGE ===================== */
+var screens = {start:$("screenStart"), quiz:$("screenQuiz"), result:$("screenResult")};
+function show(name){
+  for(var k in screens){ screens[k].classList.remove("active"); }
+  void screens[name].offsetWidth;
+  screens[name].classList.add("active");
+  window.scrollTo(0,0);
+}
+function firstUnanswered(){ for(var i=0;i<N;i++){ if(answers[i]===null) return i; } return N; }
+function answeredCount(){ var n=0; for(var i=0;i<N;i++){ if(answers[i]!==null) n++; } return n; }
+function correctCount(){ var n=0; for(var i=0;i<N;i++){ if(answers[i]===QUESTIONS[i].c) n++; } return n; }
+
+function renderDots(){
+  var box = $("dots"), fu = firstUnanswered();
+  box.innerHTML = "";
+  for(var i=0;i<N;i++){
+    (function(i){
+      var b = document.createElement("button");
+      b.className = "dot"; b.textContent = i+1; b.type="button";
+      b.setAttribute("aria-label","Zu Frage "+(i+1));
+      if(i===cur) b.classList.add("cur");
+      if(answers[i]!==null) b.classList.add(answers[i]===QUESTIONS[i].c?"ok":"bad");
+      if(i>fu) b.disabled = true;
+      b.onclick = function(){ goTo(i); };
+      box.appendChild(b);
+    })(i);
+  }
+}
+
+function renderQuestion(dir, fresh){
+  var q = QUESTIONS[cur];
+  $("qCount").textContent = "Frage "+(cur+1)+" von "+N;
+  $("progressBar").style.width = ((cur+1)/N*100)+"%";
+  $("progress").setAttribute("aria-valuenow", cur+1);
+  $("qScore").textContent = answeredCount()+" von "+N+" beantwortet";
+  $("qText").textContent = q.q;
+
+  var body = $("qBody");
+  body.classList.remove("slide-next","slide-prev");
+  if(dir){ void body.offsetWidth; body.classList.add(dir>0?"slide-next":"slide-prev"); }
+
+  var box = $("answers"); box.innerHTML = "";
+  q.a.forEach(function(text, i){
+    var b = document.createElement("button");
+    b.type="button"; b.className="ans"; b.dataset.i=i;
+    b.innerHTML = '<span class="letter">'+LETTERS[i]+'</span><span class="txt"></span>';
+    b.querySelector(".txt").textContent = text;
+    b.onclick = function(){ choose(i); };
+    box.appendChild(b);
+  });
+
+  var fb = $("feedback"); fb.className = "feedback";
+  if(answers[cur]!==null) reveal(false);
+  renderDots(); renderNav();
+}
+
+function reveal(animate){
+  var q = QUESTIONS[cur], pick = answers[cur], ok = pick===q.c;
+  var btns = $("answers").children;
+  for(var i=0;i<btns.length;i++){
+    var b = btns[i];
+    b.classList.add("locked");
+    b.classList.remove("correct","wrong","chosen","reveal");
+    b.classList.add(i===q.c?"correct":"wrong");
+    if(animate) b.classList.add("reveal");
+    var old = b.querySelector(".tag"); if(old) old.remove();
+    if(i===pick){
+      b.classList.add("chosen");
+      var t = document.createElement("span"); t.className="tag"; t.textContent="Eure Wahl"; b.appendChild(t);
+    }
+  }
+  var fb = $("feedback");
+  fb.className = "feedback show "+(ok?"ok":"bad")+(animate?" reveal":"");
+  $("fbBadge").innerHTML = ok
+    ? '<svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>'
+    : '<svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>';
+  $("fbTitle").textContent = ok ? OK_TITLES[0] : BAD_TITLES[0];
+  var subs = ok ? OK_SUBS : BAD_SUBS;
+  $("fbSub").textContent = subs[cur % subs.length].replace("{L}", LETTERS[q.c]);
+  $("fbExpl").innerHTML = "<b>Warum?</b> " + q.e;
+  if(animate){
+    setTimeout(function(){ try{ fb.scrollIntoView({behavior: settings.anim?"smooth":"auto", block:"nearest"}); }catch(e){} }, 120);
+  }
+}
+
+function choose(i){
+  if(answers[cur]!==null) return;      // Antwort ist gesperrt
+  answers[cur] = i;
+  reveal(true);
+  playSound(i===QUESTIONS[cur].c);
+  $("qScore").textContent = answeredCount()+" von "+N+" beantwortet";
+  renderDots(); renderNav();
+}
+
+function renderNav(){
+  var prev=$("prevBtn"), next=$("nextBtn"), hint=$("navHint");
+  var answered = answers[cur]!==null, last = cur===N-1;
+  prev.disabled = cur===0;
+  prev.style.visibility = cur===0 ? "hidden" : "visible";
+  if(last){
+    next.textContent = "Quiz abschließen ✓";
+    var all = answeredCount()===N;
+    next.disabled = !all;
+    hint.textContent = all ? "" : (answered ? "Beantworte zuerst alle Fragen ("+(N-answeredCount())+" offen)." : "Wählt eine Antwort aus.");
+  }else{
+    next.textContent = "Weiter →";
+    next.disabled = !answered;
+    hint.textContent = answered ? "" : "Wählt eine Antwort aus.";
+  }
+}
+
+function goTo(i){
+  if(i<0||i>=N||i===cur) return;
+  if(i>firstUnanswered()) return;
+  var dir = i>cur?1:-1; cur=i;
+  renderQuestion(dir);
+}
+function next(){
+  if($("nextBtn").disabled) return;
+  if(cur===N-1){ finish(); } else { goTo(cur+1); }
+}
+function prev(){ if(cur>0) goTo(cur-1); }
+
+function startQuiz(){
+  answers = []; for(var i=0;i<N;i++) answers.push(null);
+  cur = 0; started = true;
+  show("quiz"); renderQuestion(0);
+}
+
+function finish(){
+  if(answeredCount()<N) return;
+  var ok = correctCount(), bad = N-ok, pct = Math.round(ok/N*100);
+  $("resOk").textContent = ok; $("resBad").textContent = bad;
+  $("resPct").textContent = pct+"%"; $("resPct2").textContent = pct+"%";
+  $("resOf").textContent = ok+" von "+N;
+  var r = RESULTS[RESULTS.length-1];
+  for(var i=0;i<RESULTS.length;i++){ if(ok<=RESULTS[i].max){ r=RESULTS[i]; break; } }
+  $("verdict").textContent = r.t; $("verdictSub").textContent = r.s;
+  var rv = $("review"); rv.innerHTML="";
+  for(var j=0;j<N;j++){
+    (function(j){
+      var b=document.createElement("button"); b.type="button";
+      b.className="dot "+(answers[j]===QUESTIONS[j].c?"ok":"bad"); b.textContent=j+1;
+      b.setAttribute("aria-label","Frage "+(j+1)+" ansehen");
+      b.onclick=function(){ cur=j; show("quiz"); renderQuestion(0); };
+      rv.appendChild(b);
+    })(j);
+  }
+  var ring=$("ringVal"), circ=2*Math.PI*52;
+  ring.style.strokeDasharray = "0 1000";
+  show("result");
+  setTimeout(function(){ ring.style.strokeDasharray = (circ*ok/N)+" 1000"; }, 80);
+}
+
+/* ===================== EINSTELLUNGEN-UI ===================== */
+function openSettings(){ $("overlay").classList.add("open"); $("closeSet").focus(); }
+function closeSettings(){ $("overlay").classList.remove("open"); $("gearBtn").focus(); }
+
+function fullscreenToggle(){
+  var d=document, el=d.documentElement;
+  try{
+    if(d.fullscreenElement||d.webkitFullscreenElement){
+      (d.exitFullscreen||d.webkitExitFullscreen).call(d);
+    }else{
+      var f = el.requestFullscreen||el.webkitRequestFullscreen;
+      if(f) f.call(el);
+    }
+  }catch(e){}
+}
+
+function setBackground(file){
+  if(!file||!/^image\//.test(file.type)) return;
+  var url = URL.createObjectURL(file), img = new Image();
+  img.onload = function(){
+    var max=1920, w=img.naturalWidth, h=img.naturalHeight, s=Math.min(1, max/Math.max(w,h));
+    var c=document.createElement("canvas"); c.width=Math.round(w*s); c.height=Math.round(h*s);
+    c.getContext("2d").drawImage(img,0,0,c.width,c.height);
+    var data; try{ data=c.toDataURL("image/jpeg",.85); }catch(e){ data=null; }
+    URL.revokeObjectURL(url);
+    if(!data) return;
+    bgData = data; applySettings();
+    var stored = true;
+    try{ localStorage.setItem(BGKEY, data); }catch(e){ stored=false; }
+    $("bgNote").classList.toggle("show", !stored);
+  };
+  img.onerror = function(){ URL.revokeObjectURL(url); };
+  img.src = url;
+}
+
+function bind(){
+  $("startBtn").onclick = startQuiz;
+  $("prevBtn").onclick = prev;
+  $("nextBtn").onclick = next;
+  $("restartBtn").onclick = startQuiz;
+  $("gearBtn").onclick = openSettings;
+  $("closeSet").onclick = closeSettings;
+  $("overlay").addEventListener("mousedown", function(e){ if(e.target===$("overlay")) closeSettings(); });
+  $("fsBtn").onclick = fullscreenToggle;
+  $("presBtn").onclick = function(){ settings.pres=!settings.pres; save(); applySettings(); };
+  $("swPres").onclick = $("presBtn").onclick;
+  $("themeLight").onclick = function(){ settings.theme="light"; save(); applySettings(); };
+  $("themeDark").onclick  = function(){ settings.theme="dark"; save(); applySettings(); };
+  $("swAnim").onclick  = function(){ settings.anim=!settings.anim; save(); applySettings(); };
+  $("swSound").onclick = function(){ settings.sound=!settings.sound; save(); applySettings(); if(settings.sound) playSound(true); };
+  $("fsMinus").onclick = function(){ if(settings.scaleIdx>0){ settings.scaleIdx--; save(); applySettings(); } };
+  $("fsPlus").onclick  = function(){ if(settings.scaleIdx<SCALES.length-1){ settings.scaleIdx++; save(); applySettings(); } };
+  $("bgPick").onclick  = function(){ $("bgFile").click(); };
+  $("bgFile").onchange = function(e){ setBackground(e.target.files[0]); e.target.value=""; };
+  $("bgReset").onclick = function(){
+    bgData=null; try{ localStorage.removeItem(BGKEY); }catch(e){}
+    $("bgNote").classList.remove("show"); applySettings();
+  };
+
+  document.addEventListener("keydown", function(e){
+    if(e.ctrlKey||e.metaKey||e.altKey) return;
+    if(e.key==="Escape"){ if($("overlay").classList.contains("open")) closeSettings(); return; }
+    if($("overlay").classList.contains("open")) return;
+    if(!screens.quiz.classList.contains("active")) return;
+    var k = e.key.toLowerCase(), idx = -1;
+    if("abcd".indexOf(k)>-1 && k.length===1) idx="abcd".indexOf(k);
+    else if("1234".indexOf(k)>-1 && k.length===1) idx=parseInt(k,10)-1;
+    if(idx>-1){ choose(idx); return; }
+    if(e.key==="ArrowRight"){ next(); }
+    else if(e.key==="ArrowLeft"){ prev(); }
+  });
+}
+
+load(); applySettings(); bind();
+})();
+</script>
 </body>
 </html>
